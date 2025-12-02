@@ -41,9 +41,9 @@ export default function ProblemSet({setItem}){
         <tbody>
                 {
                     data["data"].map((item,index) => 
-                        <tr key={index}>
+                        <tr key={index} onClick={()=> setItem(item)}>
                             <th scope="row">{index+1}</th>
-                            <td onClick={()=> setItem(item)}>{item.name}</td>
+                            <td>{item.name}</td>
                         </tr>
                     )
                 }

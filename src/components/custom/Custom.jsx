@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react"
+import { useCallback } from "react"
 
 export default function Custom(){
     const addFn = useCallback(()=>{

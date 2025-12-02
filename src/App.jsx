@@ -26,6 +26,7 @@ function App() {
       { item!=null && page=="submit" && <Submit item={item}/>}
       { page=="custom" && <Custom/>}
       { item!=null && page=="question" && <Question item={item}/>}
+      { item==null && (page=="submit" || page=="question") && <div class="alert alert-primary container" role="alert">Click on a question first</div>}
     </>
   )
 }

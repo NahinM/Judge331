@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base:'/judge331/',
+  base:'/Judge331/',
   plugins: [
     react(),
     tailwindcss()

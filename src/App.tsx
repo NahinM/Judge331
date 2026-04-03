@@ -3,7 +3,7 @@ import Nav from "./components/nav"
 
 const navOptions = [
   {name: "problemset", href: "/problemset"},
-  {name: "submit", href: "/submit"},
+  {name: "solve", href: "/solve"},
   {name:"howto",href:"/howto"},
   {name:"about",href:"/about"}
 ]
@@ -17,10 +17,10 @@ function App() {
   }
 
   return (
-    <>
+    <div className="bg-gray-200 h-screen w-full m-0 p-0 overflow-y-auto">
       <Nav options={navOptions} />
       <Outlet />
-    </>
+    </div>
   )
 }
 

@@ -1,5 +1,7 @@
 import App from "./App.tsx";
 import { createHashRouter } from "react-router-dom"
+import Solve from "./pages/solve/solve.tsx";
+import AllProblems from "./pages/problemset/problemset.tsx";
 
 export const router = createHashRouter([
   {
@@ -8,11 +10,11 @@ export const router = createHashRouter([
     children: [
       {
         path: "/problemset",
-        element: <div>Problem Set</div>
+        element: <AllProblems />
       },
       {
-        path: "/submit",
-        element: <div>Submit</div>
+        path: "/solve",
+        element: <Solve />
       },
       {
         path: "/howto",

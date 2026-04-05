@@ -2,6 +2,8 @@ import App from "./App.tsx";
 import { createHashRouter } from "react-router-dom"
 import Solve from "./pages/solve/solve.tsx";
 import AllProblems from "./pages/problemset/problemset.tsx";
+import HowTo from "./pages/howto/how-to.tsx";
+import About from "./pages/about/about.tsx";
 
 export const router = createHashRouter([
   {
@@ -18,11 +20,11 @@ export const router = createHashRouter([
       },
       {
         path: "/howto",
-        element: <div>How to</div>
+        element: <HowTo />
       },
       {
         path: "/about",
-        element: <div>About</div>
+        element: <About />
       }
     ]
   }

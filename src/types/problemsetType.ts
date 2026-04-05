@@ -2,8 +2,8 @@ import type { Question } from "./questionType";
 
 interface ProblemSet {
     name: string;
-    questions: Question[];
     detail: any;
+    questions: Question[];
 }
 
 export type { ProblemSet };

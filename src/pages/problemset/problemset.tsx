@@ -1,54 +1,68 @@
-import { getProblemSet } from "./api"
-import { select } from "../../localdb/selected";
+import { useEffect, useState } from "react";
+import { getQuestions } from "./api";
+import type { Question } from "../../types/questionType";
+import { useSelected } from "../store/selected";
 import { useNavigate } from "react-router-dom";
-import { Info } from "lucide-react";
 
-const cell = "p-2 text-center"
+const table_columns = "border border-gray-400 px-4 py-2 ";
 
-function ProblemSet( {problemSet}: {problemSet: ReturnType<typeof getProblemSet>} ) {
+export default function Problemset() {
+    const [tab, setTab] = useState("all");
+    const [questions, setquestions] = useState<Question[]>([]);
+    const selectQuestion = useSelected((state: any) => state.setSelected);
     const navigate = useNavigate();
 
-    return (
-        <div className="border border-gray-500 rounded-lg mb-4 mt-4">
-        <h1 className="flex flex-row flex-nowarp items-center p-2 text-xl font-bold translate-y-[-50%] translate-x-[20px] bg-gray-100 inline-block rounded-lg border-1 border-gray-400" >{problemSet.name} <Info className="inline-block text-sky-500 cursor-pointer"/></h1>
-        <table className="w-full mt-4">
-            <thead className="border-b border-black">
-                <tr>
-                    <th className={cell}>ID</th>
-                    <th className={cell}>Title</th>
-                    <th className={cell}>Difficulty</th>
-                </tr>
-            </thead>
-            <tbody className="text-black">
-                {problemSet.questions.map((question) => (
-                    <tr
-                    key={question.id}
-                    className="bg-transparent hover:bg-gray-300 cursor-pointer"
-                    onClick={() => { select({...question}); navigate("/solve"); }}
-                    >
-                        <td className={cell}>{question.id}</td>
-                        <td className={cell}>{question.title}</td>
-                        <td className={cell} >
-                            <span
-                            className= {
-                                "px-2 py-1 rounded-lg font-bold "
-                                + {"easy": "bg-green-200", "medium": "bg-yellow-200", "hard": "bg-red-200"}[question.difficulty]
-                            }
-                            >{question.difficulty}</span>
-                        </td>
-                    </tr>
-                ))}
-            </tbody>
-        </table>
-        </div>
-    )
-};
+    useEffect(() => {
+        getQuestions().then(questions => {
+            setquestions(questions);
+        });
+    },[]);
 
-export default function AllProblems() {
-    const problemSet = getProblemSet();
     return (
-        <div className="container mx-auto p-4">
-            <ProblemSet problemSet={problemSet}/>
+        <div className="p-2">
+        <div className="flex flex-row gap-1">
+            <a className={"py-1 px-2 rounded-md border border-gray-400" + (tab === "all" ? " bg-green-700 text-white" : "bg-gray-300")} onClick={() => setTab("all")}>
+                All Problems
+            </a>
+            <a className={"py-1 px-2 rounded-md border border-gray-400" + (tab === "groups" ? " bg-green-700 text-white" : "bg-gray-300")} onClick={() => setTab("groups")}>
+                Groups
+            </a>
+        </div>
+        {
+            tab === "all" && (
+                <table className="table-auto w-full mt-4 text-center text-lg">
+                    <thead>
+                        <tr>
+                            <th className={table_columns}>ID</th>
+                            <th className={table_columns}>Title</th>
+                            <th className={table_columns}>Type</th>
+                            <th className={table_columns}>Difficulty</th>
+                            <th className={table_columns}>solved</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            questions.map((question) => (
+                                <tr
+                                key={question.id} className="hover:bg-sky-300/50"
+                                onClick={()=> {
+                                    selectQuestion(question);
+                                    navigate("/solve");
+                                }}
+                                >
+                                    <td className={table_columns}>{question.id}</td>
+                                    <td className={table_columns}>{question.title}</td>
+                                    <td className={table_columns}>{question.type}</td>
+                                    <td className={table_columns}>{question.difficulty}</td>
+                                    <td className={table_columns}>{question.solved}x</td>
+                                </tr>
+                            ))
+                        }
+                    </tbody>
+                </table>
+            )
+        }
+        
         </div>
     )
 }
